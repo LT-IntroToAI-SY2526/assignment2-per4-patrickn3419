@@ -25,26 +25,35 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
         # your job is to fill out the body of this loop
 
         # 1) if we reached the end of the pattern but not source
-        if len(pattern) < len(source):
+        if pind == len(pattern):
+            print("reached end of pattern but not source")
             return None
 
         # 2) if the current thing in the pattern is a %
         # WARNING: this condition contains the bulk of the code for the assignment
         # If you get stuck on this one, we encourage you to attempt the other conditions
         #   and come back to this one afterwards
+        elif pattern[pind] == "%":
+            if pattern[pind + 1] != source[sind]:
+                print(source[sind])
+                sind += 1
+                result.append(source[sind])
 
         # 3) if we reached the end of the source but not the pattern
-        if len(pattern) > len(source):
+        elif sind == len(source):
+            print("reached end of source but not pattern")
             return None
 
         # 4) if the current thing in the pattern is an _
-        if pattern[pind] == "_":
+        elif pattern[pind] == "_":
             print(source[sind])
-            return source[sind]
+            result.append(source[sind])
+            pind += 1
+            sind += 1
 
         # 5) if the current thing in the pattern is the same as the current thing in the
         # source
-        if pattern[pind] == source[sind]:
+        elif pattern[pind] == source[sind]:
             print(pattern[pind], source[sind])
             pind += 1
             sind += 1
@@ -53,7 +62,7 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
         # indicates the current thing it pattern doesn't match the current thing in
         # source
         else:
-            print(pattern[pind] + " " + source[sind])
+            print(pattern[pind], source[sind])
             print("no match")
             return None
 
