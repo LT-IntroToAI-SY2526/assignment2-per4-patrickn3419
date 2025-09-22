@@ -34,10 +34,12 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
         # If you get stuck on this one, we encourage you to attempt the other conditions
         #   and come back to this one afterwards
         elif pattern[pind] == "%":
-            if pattern[pind + 1] != source[sind]:
-                print(source[sind])
-                sind += 1
-                result.append(source[sind])
+            # two situations, % is last and % is not last
+            if pind == len(pattern) - 1:
+                combined = " ".join(source[sind:])
+                result.append(combined)
+                print(result)
+                return result
 
         # 3) if we reached the end of the source but not the pattern
         elif sind == len(source):
@@ -78,6 +80,7 @@ if __name__ == "__main__":
     assert match(["x", "_", "z"], ["x", "y", "z"]) == ["y"], "test 5 failed"
     assert match(["x", "_", "_"], ["x", "y", "z"]) == ["y", "z"], "test 6 failed"
     assert match(["%"], ["x", "y", "z"]) == ["x y z"], "test 7 failed"
+    assert match(["x", "%"], ["x", "y", "z", "a", "b"]) == ["y z a b"], "test 7.5 failed"
     assert match(["x", "%", "z"], ["x", "y", "z"]) == ["y"], "test 8 failed"
     assert match(["%", "z"], ["x", "y", "z"]) == ["x y"], "test 9 failed"
     assert match(["x", "%", "y"], ["x", "y", "z"]) == None, "test 10 failed"
